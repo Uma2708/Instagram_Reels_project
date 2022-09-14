@@ -1,4 +1,4 @@
-.signup-container {
+.login-container {
     /* border:1px solid red; */
     display: flex;
     justify-content: center;
@@ -6,12 +6,11 @@
     margin-top: 8rem;
     text-align: center;
     flex-direction: column;
-
 }
 
-.signup-card {
+.login-card {
     width: 25rem;
-    height: 27rem;
+    height: 18rem;
     border: 1px solid #ccc;
     padding: 1rem;
 }
@@ -21,12 +20,4 @@
     border: 1px solid #ccc;
     padding: 1rem;
     margin-top: 1rem;
-}
-
-.tnc {
-    width: 25rem;
-    padding: 1rem;
-    margin-top: 1rem;
-    color: gray;
- 
 }

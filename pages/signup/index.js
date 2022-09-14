@@ -48,7 +48,7 @@ function index() {
                         <CloudUploadIcon />
                     </IconButton>
                     Upload Profile Image
-                    <input hidden accept="image/*" multiple type="file" />
+                    <input hidden  accept="image/*" multiple type="file" />
                 </Button>
 
                 <Button
