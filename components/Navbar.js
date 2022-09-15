@@ -12,6 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import insta from '../assets/instagram.jpeg'
+import Image from 'next/image'
+import HomeIcon from "@mui/icons-material/Home";
+import ExploreIcon from "@mui/icons-material/Explore";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Logout"];
@@ -47,7 +51,7 @@ const ResponsiveAppBar = () => {
                         href="/"
                         sx={{
                             mr: 2,
-                            display: { xs: "none", md: "flex" },
+                            display: { xs: "flex", md: "flex" },
                             fontFamily: "monospace",
                             fontWeight: 700,
                             letterSpacing: ".3rem",
@@ -55,11 +59,11 @@ const ResponsiveAppBar = () => {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        <Image src ={insta} width={200} height={55} />
                     </Typography>
 
                     {/* when navbar is xs  */}
-                    <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                    {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -113,10 +117,10 @@ const ResponsiveAppBar = () => {
                         }}
                     >
                         LOGO
-                    </Typography>
+                    </Typography> */}
 
-                    <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                        {pages.map((page) => (
+                    <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
+                        {/* {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
@@ -124,10 +128,12 @@ const ResponsiveAppBar = () => {
                             >
                                 {page}
                             </Button>
-                        ))}
+                        ))} */}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0 }} className="nav-icons-container">
+                    <HomeIcon fontSize="large" className="nav-icons" />
+            <ExploreIcon fontSize="large" className="nav-icons" />
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
