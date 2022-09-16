@@ -7,7 +7,7 @@ import AuthWrapper from '../context/auth';
 function MyApp({ Component, pageProps }) {
 return(
   <AuthWrapper>
-  return <Component {...pageProps} />
+    <Component {...pageProps} />
   </AuthWrapper>
 )
 }
