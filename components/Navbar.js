@@ -17,12 +17,19 @@ import Image from 'next/image'
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Logout"];
+// const pages = ["Products", "Pricing", "Blog"];
+// const settings = ["Profile", "Logout"];
+
+import { AuthContext } from "../context/auth";
+import { useRouter } from "next/router";
 
 const ResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const { logout } = React.useContext(AuthContext);
+    const router = useRouter();
+
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -38,6 +45,11 @@ const ResponsiveAppBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleLogout = async () => {
+        await logout();
+        router.push('/login');
+    }
 
     return (
         <AppBar position="static" className="navbar">
@@ -59,7 +71,7 @@ const ResponsiveAppBar = () => {
                             textDecoration: "none",
                         }}
                     >
-                        <Image src ={insta} width={200} height={55} />
+                        <Image src={insta} width={200} height={55} />
                     </Typography>
 
                     {/* when navbar is xs  */}
@@ -132,12 +144,12 @@ const ResponsiveAppBar = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }} className="nav-icons-container">
-                    <HomeIcon fontSize="large" className="nav-icons" />
-            <ExploreIcon fontSize="large" className="nav-icons" />
+                        <HomeIcon fontSize="large" className="nav-icons" />
+                        <ExploreIcon fontSize="large" className="nav-icons" />
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" 
-                                sx={{margin:"0.5rem"}}
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"
+                                    sx={{ margin: "0.5rem" }}
                                 />
                             </IconButton>
                         </Tooltip>
@@ -157,11 +169,15 @@ const ResponsiveAppBar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">Profile</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => {
+                                handleLogout()
+                                handleCloseUserMenu()
+                            }}>
+                                <Typography textAlign="center">Logout</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

@@ -1,28 +1,47 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import { auth} from "../firebase";
 export const AuthContext = React.createContext();
-import { signInWithEmailAndPassword } from "firebase/auth";
-function AuthWrapper({children}) {
-    console.log("in auth wrapper ");
+
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+function AuthWrapper({ children }) {
+  const [user, setUser] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  console.log("in auth wrapper ");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log("onAuthStateChanged called" );
+      if (user) {
+        setUser(user);
+      }
+      else {
+        //sign out 
+      }
+    })
+    setLoading(false);
+  },[])
+
     //feature created 
+
     function login(email,password) {
         return signInWithEmailAndPassword(auth, email, password);
     }
-// function AuthWrapper() {
-//     console.log("hello in auth wrapper ")
-//   return (
-//     <div>hello</div>
-//   )
-// }
+    function logout(){
+      return signOut(auth);
+    }
+
 const store = {
-  login
-}
+  login,
+  user, logout,
+};
 
 
 return (
 <AuthContext.Provider value={store}>
-  {children}
+  {!loading && children}
 </AuthContext.Provider>
 );
 }
+
 export default AuthWrapper;
