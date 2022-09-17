@@ -1,61 +1,50 @@
 import React, { useContext, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Image from "next/image";
-import logo from "../../assets/Instagram.jpeg";
+import logo from "../assets/Instagram.jpeg";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import IconButton from "@mui/material/IconButton";
 import { Carousel } from "react-responsive-carousel";
-import bg1 from '../../assets/bg1.jpg'
-import bg2 from '../../assets/bg2.jpg'
-import bg3 from '../../assets/bg3.jpg'
-import bg4 from '../../assets/bg4.jpg'
-import bg5 from '../../assets/bg5.jpg'
-import { AuthContext } from '../../context/auth';
+import bg1 from "../assets/bg1.jpg";
+import bg2 from "../assets/bg2.jpg";
+import bg3 from "../assets/bg3.jpg";
+import bg4 from "../assets/bg4.jpg";
+import bg5 from "../assets/bg5.jpg";
+import { AuthContext } from "../context/auth";
 import { useRouter } from "next/router";
-
 import Link from 'next/link'
 
-function index() {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [error, setError] = React.useState('');
+function forgot() {
+    const [email, setEmail] = React.useState("");
+    const [error, setError] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
-    const { login, user } = useContext(AuthContext);
+    const { forgetPassword, user } = useContext(AuthContext);
     useEffect(() => {
         if (user) {
             //route to feeds page
             router.push("/");
-
-            // const { login } = useContext(AuthContext);
         }
-    }, [user])
-
+    }, [user]);
     let handleClick = async () => {
         try {
             console.log(email);
-            console.log(password);
             setLoading(true);
-            setError('');
-            await login(email, password);
-            console.log("logged in");
-        }
-        catch (err) {
-            console.log("error ", JSON.stringify(err));
+            setError("");
+            await forgetPassword(email);
+            console.log("email sent");
+            router.push('/login');
+        } catch (err) {
+            console.log("error ", err);
             setError(err.code);
             // use settimeout to remove error after 2sec
             setTimeout(() => {
-                setError('');
+                setError("");
             }, 2000);
         }
         setLoading(false);
-
-
-    }
+    };
     return (
         <div className="login-container">
-
             <div className="insta-mob-bg">
                 <div className="carousel">
                     <Carousel
@@ -89,25 +78,9 @@ function index() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <TextField
-                        id="outlined-basic"
-                        size="small"
-                        label="Password"
-                        variant="outlined"
-                        fullWidth
-                        margin="dense"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
 
-                    {/* if error is present then show error */}
                     {error != "" && <div style={{ color: "red" }}>{error}</div>}
-                    <Link href="/forgot">
-                        <div style={{ color: "blue", marginTop: "0.5rem" }}>
-                            Forget Password{" "}
-                        </div>
-                    </Link>
+
                     <Button
                         style={{ marginTop: "1rem" }}
                         variant="contained"
@@ -116,7 +89,7 @@ function index() {
                         onClick={handleClick}
                         disabled={loading}
                     >
-                        Log in
+                        Send Mail
                     </Button>
                 </div>
                 <div className="bottom-card">
@@ -130,4 +103,4 @@ function index() {
     );
 }
 
-export default index;
+export default forgot;
